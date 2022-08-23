@@ -92,9 +92,40 @@ def rename_bones():
             chest = bone
         if bone.name == 'UpperChest':
             upper_chest = bone
+            
+        # セシル変身
+        if bone.name == 'LeftEyeRoot':
+            bone.name = '<NoIK>LeftEyeRoot'
+        if bone.name == 'RightEyeRoot':
+            bone.name = '<NoIK>RightEyeRoot'
+        if bone.name == 'LeftEye':
+            bone.name = 'L_FaceEye'
+        if bone.name == 'RightEye':
+            bone.name = 'R_FaceEye'
     
     if not chest == None and not upper_chest == None:
         upper_chest.name = '<NoIK>' + upper_chest.name
+
+def cecil_rename_bones():
+    bones = bpy.data.armatures[0].bones
+
+    for bone in bones:
+        # セシル変身
+        if bone.name == 'LeftEyeRoot':
+            bone.name = '<NoIK>LeftEyeRoot'
+        if bone.name == 'RightEyeRoot':
+            bone.name = '<NoIK>RightEyeRoot'
+        if bone.name == 'LeftEye':
+            bone.name = 'L_FaceEye'
+        if bone.name == 'RightEye':
+            bone.name = 'R_FaceEye'
+
+def get_avatar_type():
+    bones = bpy.data.armatures[0].bones
+    for bone in bones:
+        if(bone.name == "MeRoot"):
+            return 'CECIL_HENSHIN'
+    return 'VROID'
 
 if '__main__' == __name__:
     parser = argparse.ArgumentParser()
@@ -114,10 +145,17 @@ if '__main__' == __name__:
     bpy.ops.preferences.addon_enable(module="VRM_Addon_for_Blender-release")
     bpy.ops.import_scene.vrm(filepath=input, extract_textures_into_folder=True)
 
-    remove_trashes()
-    rename_bones()
-    remove_root_bone()
-    mtoon_to_bsdf()
+    match(get_avatar_type()):
+        case 'VROID':
+            print('Running in VROID mode')
+            remove_trashes()
+            rename_bones()
+            remove_root_bone()
+            mtoon_to_bsdf()
+        case 'CECIL_HENSHIN':
+            print('Running in Cecil Henshin mode')
+            cecil_rename_bones()
+            mtoon_to_bsdf()
 
     if fbx:
         bpy.ops.export_scene.fbx(filepath=output, embed_textures=True, path_mode='COPY', object_types={'ARMATURE', 'MESH'}, global_scale=0.01)

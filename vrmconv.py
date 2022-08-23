@@ -92,16 +92,6 @@ def rename_bones():
             chest = bone
         if bone.name == 'UpperChest':
             upper_chest = bone
-            
-        # セシル変身
-        if bone.name == 'LeftEyeRoot':
-            bone.name = '<NoIK>LeftEyeRoot'
-        if bone.name == 'RightEyeRoot':
-            bone.name = '<NoIK>RightEyeRoot'
-        if bone.name == 'LeftEye':
-            bone.name = 'L_FaceEye'
-        if bone.name == 'RightEye':
-            bone.name = 'R_FaceEye'
     
     if not chest == None and not upper_chest == None:
         upper_chest.name = '<NoIK>' + upper_chest.name

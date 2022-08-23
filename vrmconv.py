@@ -111,15 +111,21 @@ def cecil_rename_bones():
 
     for bone in bones:
         # セシル変身
+        if bone.name == 'MeRoot':
+            bone.name = '<NoIK>MeRoot'
+        if bone.name == 'Me_L':
+            bone.name = '<NoIK>Me_L'
+        if bone.name == 'Me_R':
+            bone.name = '<NoIK>Me_R'
         if bone.name == 'LeftEyeRoot':
             bone.name = '<NoIK>LeftEyeRoot'
         if bone.name == 'RightEyeRoot':
             bone.name = '<NoIK>RightEyeRoot'
         if bone.name == 'LeftEye':
-            bone.name = 'L_FaceEye'
+            bone.name = 'EyeL'
         if bone.name == 'RightEye':
-            bone.name = 'R_FaceEye'
-
+            bone.name = 'EyeR'
+            
 def get_avatar_type():
     bones = bpy.data.armatures[0].bones
     for bone in bones:
